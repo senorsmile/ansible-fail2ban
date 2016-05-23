@@ -5,7 +5,7 @@
     state: installed
 
 - name: Copy fail2ban configuration into place
-  template: src=etc_fail2ban_jail.local.j2 dest=/etc/fail2ban/jail.local
+  template: src=ubuntu.etc_fail2ban_jail.local.j2 dest=/etc/fail2ban/jail.local
   notify: restart fail2ban
 
 - name: Ensure fail2ban is started
