@@ -1,0 +1,21 @@
+---
+- name: Ensure fail2ban installed
+  pacman: 
+    name: fail2ban
+    state: installed
+
+#- name: Copy fail2ban configuration into place
+#  template: 
+#    src: etc_fail2ban_jail.local.j2 
+#    dest: /etc/fail2ban/jail.local
+#  notify: restart fail2ban
+
+- name: Ensure fail2ban is started and enabled at boot
+  service: 
+    name: fail2ban 
+    state: started
+    enabled: true
+
+#- name: Update sshd config to disallow root logins
+#  lineinfile: dest=/etc/ssh/sshd_config regexp=^PermitRootLogin line="PermitRootLogin no" state=present
+#  notify: restart ssh
