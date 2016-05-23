@@ -1,7 +1,10 @@
 [DEFAULT]
 ignoreip  = 127.0.0.1 {{ ansible_default_ipv4.address }} {% if fail2ban_friendly_networks is defined %}{{ ' '.join(fail2ban_friendly_networks) }}{% endif %}
+
 bantime   = 86400
+
 destemail = {% if fail2ban_admin_email is defined %}{{ fail2ban_admin_email }}{% endif %}
+
 banaction = {% if fail2ban_banaction is defined %}{{ fail2ban_banaction }}{% else %}iptables-multiport{% endif %}
 
 action    = %(action_)s
