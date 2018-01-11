@@ -10,7 +10,7 @@ banaction = {% if fail2ban_banaction is defined %}{{ fail2ban_banaction }}{% els
 action    = %(action_)s
 
 # JAILS
-[ssh]
+[{% if ansible_distribution == 'Ubuntu' and ansible_distribution_version >= '16.04' %}sshd{% else %}ssh{% endif %}]
 enabled   = true
 maxretry  = 3
 
@@ -18,7 +18,7 @@ maxretry  = 3
 enabled   = true
 banaction = iptables-allports
 
-[ssh-ddos]
+[{% if ansible_distribution == 'Ubuntu' and ansible_distribution_version >= '16.04' %}sshd-ddos{% else %}ssh-ddos{% endif %}]
 enabled   = true
 
 #[apache]
