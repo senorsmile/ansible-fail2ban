@@ -1,18 +1,37 @@
 ---
 
+- set_fact:
+    supported_os: False
+
+- set_fact:
+    supported_os: True
+  when:
+    - (
+        ( ansible_distribution == 'Ubuntu' )
+        and 
+        (
+          ansible_distribution_version == '16.04'
+          or
+          ansible_distribution_version == '14.04'
+          or
+          ansible_distribution_version == '12.04'
+        )
+    )
+    or
+    ( ansible_pkg_mgr == 'pacman' )
+
+
 - name: If host running arch or derivative
   include: arch.yml
   when: 
-    ansible_pkg_mgr == 'pacman'
+    - supported_os
+    - ansible_pkg_mgr == 'pacman'
 
 - name: If host running ubuntu
-  include: ubuntu_14_04.yml
+  include: ubuntu.yml
   when: 
-    ansible_distribution == 'Ubuntu' 
-    and 
-    (
-      ansible_distribution_version == '14.04'
-      or
-      ansible_distribution_version == '12.04'
-    )
+    - supported_os
+    - ansible_distribution == 'Ubuntu' 
 
+- include: unsupported.yml
+  when: not supported_os
