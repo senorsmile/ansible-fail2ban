@@ -7,18 +7,20 @@
     supported_os: True
   when:
     - (
-        ( ansible_distribution == 'Ubuntu' )
-        and 
-        (
-          ansible_distribution_version == '16.04'
-          or
-          ansible_distribution_version == '14.04'
-          or
-          ansible_distribution_version == '12.04'
+        ( 
+          ( ansible_distribution == 'Ubuntu' )
+          and 
+          (
+            ansible_distribution_version == '16.04'
+            or
+            ansible_distribution_version == '14.04'
+            or
+            ansible_distribution_version == '12.04'
+          )
         )
-    )
-    or
-    ( ansible_pkg_mgr == 'pacman' )
+        or
+        ansible_pkg_mgr == 'pacman' 
+      )
 
 
 - name: If host running arch or derivative
