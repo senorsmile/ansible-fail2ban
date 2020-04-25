@@ -4,7 +4,7 @@
     name: fail2ban
     state: present
     update_cache: yes
-    ache_valid_time: 3600
+    cache_valid_time: 3600
 
 - name: Copy fail2ban configuration into place
   template:
