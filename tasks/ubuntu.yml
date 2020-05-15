@@ -1,4 +1,9 @@
 ---
+- name: Apt update
+  apt:
+    update_cache: True
+    cache_valid_time: 3600
+
 - name: Ensure fail2ban installed
   apt: 
     name: fail2ban
