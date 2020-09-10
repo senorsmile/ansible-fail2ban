@@ -21,7 +21,9 @@
           )
         )
         or
-        ansible_pkg_mgr == 'pacman' 
+        ( ansible_distribution == 'Kali GNU/Linux' )
+        or
+        ( ansible_pkg_mgr == 'pacman' )
       )
 
 
