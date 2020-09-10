@@ -37,7 +37,11 @@
   include: ubuntu.yml
   when: 
     - supported_os
-    - ansible_distribution == 'Ubuntu' 
+    - ( 
+        ( ansible_distribution == 'Ubuntu' )
+        or
+        ( ansible_distribution == 'Kali GNU/Linux' )
+      )
 
 - include: unsupported.yml
   when: not supported_os
