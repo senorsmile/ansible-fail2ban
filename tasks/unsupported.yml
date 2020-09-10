@@ -1,4 +1,9 @@
 ---
 - name: FAIL | Unsupported OS
   fail:
-    msg: "You're trying to use this role on an untested OS.  See main.yml code for list of supported OS's."
+    msg: >
+      You're trying to use this role on an untested OS.  
+        Distribution: {{ ansible_distribution }}
+        Version: {{ ansible_distribution_version }}
+
+      See main.yml code for list of supported OS's.
