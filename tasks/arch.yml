@@ -1,21 +1,51 @@
 ---
 - name: Ensure fail2ban installed
-  pacman: 
+  pacman:
     name: fail2ban
     state: installed
 
-#- name: Copy fail2ban configuration into place
-#  template: 
-#    src: etc_fail2ban_jail.local.j2 
-#    dest: /etc/fail2ban/jail.local
-#  notify: restart fail2ban
+- name: Copy fail2ban configuration into place
+  template:
+    src:  arch.etc_fail2ban_jail.local.j2
+    dest: /etc/fail2ban/jail.local
+  notify: restart fail2ban
 
-- name: Ensure fail2ban is started and enabled at boot
-  service: 
-    name: fail2ban 
-    state: started
+- name: Hardened log dir
+  file:
+    state: directory
+    path: /var/log/fail2ban/
+  notify: restart fail2ban
+
+- name: Hardened systemd folder
+  file:
+    state: directory
+    path: /etc/systemd/system/fail2ban.service.d/
+  notify: restart fail2ban
+
+- name: Hardened systemd config
+  template:
+    src: arch.systemd.override.conf
+    dest: /etc/systemd/system/fail2ban.service.d/override.conf
+  notify: restart fail2ban
+
+- name: Enable fail2ban at boot
+  service:
+    name: fail2ban
     enabled: true
+
+- name: Start fail2ban
+  service:
+    name: fail2ban
+    state: started
+  register: fail2ban_start
 
 #- name: Update sshd config to disallow root logins
 #  lineinfile: dest=/etc/ssh/sshd_config regexp=^PermitRootLogin line="PermitRootLogin no" state=present
 #  notify: restart ssh
+
+- name: Check fail2ban status after start
+  shell: |
+    sleep 10
+    systemctl status fail2ban
+  changed_when: False
+  when: ( fail2ban_start is changed )

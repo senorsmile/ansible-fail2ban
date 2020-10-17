@@ -5,7 +5,7 @@
     cache_valid_time: 3600
 
 - name: Ensure fail2ban installed
-  apt: 
+  apt:
     name: fail2ban
     state: present
 
@@ -15,16 +15,22 @@
     dest: /etc/fail2ban/jail.local
   notify: restart fail2ban
 
-- name: Ensure fail2ban is started
+- name: Enable fail2ban at boot
   service:
-    name:  fail2ban
-    state: started
+    name: fail2ban
+    enabled: true
 
-- name: Update sshd config to disallow root logins
-  lineinfile:
-    dest:   /etc/ssh/sshd_config
-    regexp: "^PermitRootLogin"
-    line:   "PermitRootLogin no"
-    state:  present
-  notify: restart ssh
-  when: ( disallow_root_login )
+- name: Start fail2ban
+  service:
+    name: fail2ban
+    state: started
+  register: fail2ban_start
+
+#- name: Update sshd config to disallow root logins
+#  lineinfile:
+#    dest:   /etc/ssh/sshd_config
+#    regexp: "^PermitRootLogin"
+#    line:   "PermitRootLogin no"
+#    state:  present
+#  notify: restart ssh
+#  when: ( disallow_root_login )
