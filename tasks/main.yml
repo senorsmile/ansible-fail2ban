@@ -7,9 +7,9 @@
     supported_os: True
   when:
     - (
-        ( 
+        (
           ( ansible_distribution == 'Ubuntu' )
-          and 
+          and
           (
             ansible_distribution_version == '18.04'
             or
@@ -29,15 +29,15 @@
 
 - name: If host running arch or derivative
   include: arch.yml
-  when: 
+  when:
     - supported_os
     - ansible_pkg_mgr == 'pacman'
 
 - name: If host running ubuntu
   include: ubuntu.yml
-  when: 
+  when:
     - supported_os
-    - ( 
+    - (
         ( ansible_distribution == 'Ubuntu' )
         or
         ( ansible_distribution == 'Kali GNU/Linux' )

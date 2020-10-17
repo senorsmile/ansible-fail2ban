@@ -2,7 +2,7 @@
 - name: FAIL | Unsupported OS
   fail:
     msg: >
-      You're trying to use this role on an untested OS.  
+      You're trying to use this role on an untested OS.
         Distribution: {{ ansible_distribution }}
         Version: {{ ansible_distribution_version }}
 

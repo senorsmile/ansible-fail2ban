@@ -1,2 +1,3 @@
 ---
 disallow_root_login: True
+fail2ban_friendly_networks: []
