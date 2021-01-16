@@ -11,6 +11,8 @@
           ( ansible_distribution == 'Ubuntu' )
           and
           (
+            ansible_distribution_version == '20.04'
+            or
             ansible_distribution_version == '18.04'
             or
             ansible_distribution_version == '16.04'
