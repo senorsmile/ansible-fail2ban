@@ -4,6 +4,13 @@
     name: fail2ban
     state: installed
 
+- name: Change default logtarget to sysout (systemd)
+  lineinfile:
+    path: /etc/fail2ban/fail2ban.conf
+    regexp: '^logtarget ='
+    line:    'logtarget = SYSOUT'
+    
+
 - name: Copy fail2ban configuration into place
   template:
     src:  arch.etc_fail2ban_jail.local.j2
